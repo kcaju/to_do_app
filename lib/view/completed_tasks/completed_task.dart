@@ -15,21 +15,8 @@ class CompletedTask extends StatefulWidget {
 
 class _CompletedTaskState extends State<CompletedTask> {
   bool isCompleted = false;
-  // List<dynamic> completedTasks = [];
-  final noteBox = Hive.box(AppSessions.NOTEBOX);
-  @override
-  void initState() {
-    // _loadCompletedTasks();
-    super.initState();
-  }
 
-  // void _loadCompletedTasks() {
-  //   setState(() {
-  //     completedTasks = noteBox.values
-  //         .where((task) => task['status'] == 'Completed')
-  //         .toList();
-  //   });
-  // }
+  final noteBox = Hive.box(AppSessions.NOTEBOX);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +24,14 @@ class _CompletedTaskState extends State<CompletedTask> {
       backgroundColor: ColorConstants.blue3,
       appBar: AppBar(
         backgroundColor: ColorConstants.blue1,
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: ColorConstants.mainwhite,
+            )),
         title: Text(
           "Tasks Overview",
           style: TextStyle(
@@ -45,69 +40,65 @@ class _CompletedTaskState extends State<CompletedTask> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: Column(
-        children: [
-          Image.asset(ImageConstants.claps),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 100,
-            decoration: BoxDecoration(color: ColorConstants.blue1),
-            child: Column(
-              children: [
-                Text(
-                  '${widget.checkCount}',
-                  style: TextStyle(
-                      color: ColorConstants.mainwhite,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Completed Tasks",
-                  style:
-                      TextStyle(color: ColorConstants.mainwhite, fontSize: 20),
-                )
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            widget.checkCount == 0
+                ? Image.asset(
+                    ImageConstants.notask,
+                  )
+                : Image.asset(
+                    ImageConstants.claps,
+                  ),
+            SizedBox(
+              height: 30,
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              height: 100,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: ColorConstants.blue1,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.checkCount != 0
+                      ? Text(
+                          '${widget.checkCount}',
+                          style: TextStyle(
+                              color: ColorConstants.mainwhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25),
+                        )
+                      : Image.asset(
+                          ImageConstants.thumb,
+                          height: 60,
+                        ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  widget.checkCount != 0
+                      ? Text(
+                          "Completed Tasks",
+                          style: TextStyle(
+                              color: ColorConstants.mainwhite, fontSize: 20),
+                        )
+                      : Text(
+                          "Complete your Tasks",
+                          style: TextStyle(
+                              color: ColorConstants.mainwhite, fontSize: 20),
+                        )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-
-      //  ValueListenableBuilder(
-      //   valueListenable: noteBox.listenable(),
-      //   builder: (context, value, child) {
-      //     final completedTasks = value.values
-      //         .where((task) => task['status'] == 'Completed')
-      //         .toList();
-      //     print('Completed tasks: $completedTasks');
-      //     return Padding(
-      //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      //       child: completedTasks.isEmpty
-      //           ? Center(
-      //               child: Text("No completed tasks yet!",
-      //                   style: TextStyle(
-      //                       color: ColorConstants.mainwhite, fontSize: 18)))
-      //           : ListView.separated(
-      //               itemBuilder: (context, index) {
-      //                 var task = completedTasks[index];
-      //                 return TaskCard(
-      //                     isCheck: false,
-      //                     isCompleted: true,
-      //                     title: task['title'],
-      //                     date: task['date'],
-      //                     des: task['desc']);
-      //               },
-      //               separatorBuilder: (context, index) => SizedBox(
-      //                     height: 10,
-      //                   ),
-      //               itemCount: completedTasks.length),
-      //     );
-      //   },
-      // ),
     );
   }
 }

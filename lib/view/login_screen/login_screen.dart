@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstants.lightblue,
+      backgroundColor: ColorConstants.blue3,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: ColorConstants.blue3),
+                  color: ColorConstants.blue1),
             ),
             SizedBox(
               height: 15,
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   style: ButtonStyle(
                       backgroundColor:
-                          WidgetStatePropertyAll(ColorConstants.blue3),
+                          WidgetStatePropertyAll(ColorConstants.blue1),
                       shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)))),
                   child: Text(

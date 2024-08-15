@@ -12,16 +12,17 @@ class TaskCard extends StatefulWidget {
     required this.des,
     this.onDelete,
     this.onEdit,
-    this.isCheck = false,
     this.isCompleted = false,
-    this.listIndex,
     this.onCheckboxChanged,
+    required this.time,
+    this.isImportant = false,
   });
-  final String title, date, des;
+  final String title, date, des, time;
   final void Function()? onDelete;
   final void Function()? onEdit;
-  final bool isCheck, isCompleted;
-  final int? listIndex;
+  final bool isCompleted;
+  final bool isImportant;
+
   final void Function(bool?)? onCheckboxChanged;
 
   @override
@@ -70,45 +71,31 @@ class _TaskCardState extends State<TaskCard> {
           children: [
             Row(
               children: [
-                widget.isCheck
-                    ? Checkbox(
-                        checkColor: ColorConstants.mainblack,
-                        fillColor:
-                            WidgetStatePropertyAll(ColorConstants.mainwhite),
-                        value: onChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            onChecked = value!;
-                          });
-                          widget.onCheckboxChanged?.call(value);
-                        },
-                        //  (value) {
-                        //   // print(
-                        //   //     'TaskCard: title=${widget.title}, date=${widget.date}, desc=${widget.des}');
-                        //   setState(() {
-                        //     onChecked = value!;
-                        //   });
-                        //   if (noteKeys.isNotEmpty && widget.listIndex != null) {
-                        //     var currentNote =
-                        //         noteBox.get(noteKeys[widget.listIndex!]);
-                        //     currentNote['status'] =
-                        //         onChecked ? 'Completed' : 'On Going';
-                        //     noteBox.put(
-                        //         noteKeys[widget.listIndex!], currentNote);
-                        //     setState(() {});
-                        //   }
-                        // },
+                Checkbox(
+                  checkColor: ColorConstants.mainblack,
+                  fillColor: WidgetStatePropertyAll(ColorConstants.mainwhite),
+                  value: onChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      onChecked = value!;
+                    });
+                    widget.onCheckboxChanged?.call(value);
+                  },
+                ),
+                widget.isImportant
+                    ? Icon(
+                        Icons.star,
+                        color: ColorConstants.amber,
                       )
-                    : Icon(
-                        Icons.task,
-                        color: ColorConstants.mainwhite,
-                      ),
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: ColorConstants.mainwhite),
+                    : Text(""),
+                Expanded(
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: ColorConstants.mainwhite),
+                  ),
                 ),
                 Spacer(),
                 TextButton(
@@ -137,18 +124,26 @@ class _TaskCardState extends State<TaskCard> {
               color: ColorConstants.mainwhite,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.date,
                   style:
                       TextStyle(color: ColorConstants.mainwhite, fontSize: 18),
                 ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  widget.time,
+                  style:
+                      TextStyle(color: ColorConstants.mainwhite, fontSize: 18),
+                ),
+                Spacer(),
                 IconButton(
                   onPressed: () {
                     //share text
                     Share.share(
-                        '${widget.title} \n ${widget.des} \n ${widget.date}');
+                        '${widget.title} \n ${widget.des} \n ${widget.date} \n ${widget.time}');
                   },
                   icon: Icon(
                     Icons.share,
