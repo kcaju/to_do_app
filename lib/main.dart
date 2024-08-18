@@ -6,6 +6,8 @@ import 'package:to_do_app/view/login_screen/login_screen.dart';
 void main() async {
   await Hive.initFlutter();
   var box = await Hive.openBox(AppSessions.NOTEBOX);
+  var box1 = await Hive.openBox(AppSessions.COMPLETEBOX);
+
   runApp(MyApp());
 }
 

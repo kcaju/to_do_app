@@ -25,6 +25,23 @@ class TaskDetailingScreen extends StatelessWidget {
               Icons.arrow_back,
               color: ColorConstants.mainwhite,
             )),
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.library_books,
+              color: ColorConstants.mainwhite,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "To-do",
+              style: TextStyle(color: ColorConstants.mainwhite, fontSize: 25),
+            )
+          ],
+        ),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),

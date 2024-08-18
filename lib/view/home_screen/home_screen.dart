@@ -32,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController time = TextEditingController();
   DatePickerController datepick = DatePickerController();
   var noteBox = Hive.box(AppSessions.NOTEBOX);
+  var completedNoteBox = Hive.box(AppSessions.COMPLETEBOX);
+
   List noteKeys = [];
   XFile? selectedImageFile;
   int checkCount = 0;
@@ -48,10 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateCheckCount() {
     setState(() {
-      checkCount = noteBox.values
-          .where((task) => task['status'] == 'Completed')
-          .toList()
-          .length;
+      checkCount = completedNoteBox.length;
     });
   }
 
@@ -402,9 +401,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               setState(() {
                                 if (p0!) {
                                   checkCount++;
+                                  // Move task to completed box
+                                  completedNoteBox.put(
+                                      noteKeys[index], currentNote);
+                                  noteBox.delete(noteKeys[index]);
                                 } else {
                                   checkCount--;
+                                  // Remove from completed box
+                                  completedNoteBox.delete(noteKeys[index]);
+                                  noteBox.put(noteKeys[index], currentNote);
                                 }
+                                _updateCheckCount();
                               });
 
                               var updatedNote = currentNote;
@@ -558,8 +565,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () async {
                               var selectedDate = await showDatePicker(
                                   context: context,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime.now());
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(2030));
                               if (selectedDate != null) {
                                 date.text = DateFormat("dd,MMMM,y")
                                     .format(selectedDate);
