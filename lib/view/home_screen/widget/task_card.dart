@@ -88,14 +88,12 @@ class _TaskCardState extends State<TaskCard> {
                         color: ColorConstants.amber,
                       )
                     : Text(""),
-                Expanded(
-                  child: Text(
-                    widget.title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: ColorConstants.mainwhite),
-                  ),
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: ColorConstants.mainwhite),
                 ),
                 Spacer(),
                 TextButton(

@@ -17,8 +17,6 @@ class _CompletedTaskState extends State<CompletedTask> {
 
   bool isCompleted = false;
 
-  // final noteBox = Hive.box(AppSessions.NOTEBOX);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +52,13 @@ class _CompletedTaskState extends State<CompletedTask> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            Image.asset(
-              ImageConstants.claps,
-            ),
+            widget.checkCount != 0
+                ? Image.asset(
+                    ImageConstants.claps,
+                  )
+                : Image.asset(
+                    ImageConstants.notask,
+                  ),
             SizedBox(
               height: 30,
             ),
